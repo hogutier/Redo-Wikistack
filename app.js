@@ -20,8 +20,10 @@ app.use(express.static(path.join(__dirname, '..', 'public')))
 
 // For all GET requests that aren't to an API route,
 // we will send the index.html!
+const layout = require('./views/layout')
+
 app.get('/', (req, res, next) => {
-  res.redirect('./views/main')
+  res.send(layout("Hello World!"))
 })
 
 // Handle 404s
