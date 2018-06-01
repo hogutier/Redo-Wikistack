@@ -15,7 +15,8 @@ app.use(bodyParser.urlencoded({extended: true}))
 
 // Static middleware
 app.use(express.static(path.join(__dirname, 'public')))
-
+app.use('/wiki', require('./routes/wiki'))
+app.use('/users', require('./routes/user'))
 // If you want to add routes, they should go here!
 
 // For all GET requests that aren't to an API route,
@@ -23,7 +24,7 @@ app.use(express.static(path.join(__dirname, 'public')))
 const layout = require('./views/layout')
 
 app.get('/', (req, res, next) => {
-  res.send(layout("Hello World!"))
+  res.redirect('/wiki')
 })
 
 // Handle 404s
@@ -43,7 +44,7 @@ app.use((err, req, res, next) => {
 
 const init = async () => {
   try {
-    await db.sync({force: true}).then(() => console.log('The database is synced'))
+    await db.sync().then(() => console.log('The database is synced'))
     await app.listen(PORT, () => console.log(`Listening on port ${PORT}`))
   } catch (error) {
     next(error)
