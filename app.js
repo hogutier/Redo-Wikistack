@@ -44,7 +44,7 @@ app.use((err, req, res, next) => {
 
 const init = async () => {
   try {
-    await db.sync().then(() => console.log('The database is synced'))
+    await db.sync({force: false}).then(() => console.log('The database is synced'))
     await app.listen(PORT, () => console.log(`Listening on port ${PORT}`))
   } catch (error) {
     next(error)
